@@ -8,9 +8,7 @@ function disabledBtn(on, off) {
 }
 
 const btnStart = document.querySelector('button[data-start]');
-console.log(btnStart);
 const btnStop = document.querySelector('button[data-stop]');
-console.log(btnStop);
 
 let timerId = null;
 
