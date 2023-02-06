@@ -1,52 +1,66 @@
 import Notiflix from 'notiflix';
 
-const button = document.querySelector('button');
+const form = document.querySelector('.form');
 
-const submitPromise = e => {
+const submitForm = e => {
   e.preventDefault();
 
-  const delayInput = document.querySelector("input[name='delay']").value;
-  const stepInput = document.querySelector('input[name="step"]').value;
-  const amountInput = document.querySelector('input[name="amount"]').value;
+  let delayInput = Number(e.currentTarget.delay.value);
+  const stepInput = Number(e.currentTarget.step.value);
+  const amountInput = Number(e.currentTarget.amount.value);
 
-  let counter = 1;
-  let intervalId = null;
-
-  setTimeout(() => {
-    createPromise(counter, delayInput)
-      .then(value => {
-        Notiflix.Notify.success(value);
-      })
-      .catch(error => {
-        Notiflix.Notify.failure(error);
-      });
-
-    intervalId = setInterval(() => {
-      counter++;
-
-      if (counter === +amountInput) {
-        clearInterval(intervalId);
-      }
-      createPromise(counter, +delayInput + stepInput * counter)
-        .then(value => {
-          Notiflix.Notify.success(value);
-        })
-        .catch(error => {
-          Notiflix.Notify.failure(error);
-        });
-    }, stepInput);
-  }, delayInput);
+  for (let position = 1; position <= amountInput; position += 1) {
+    createPromise(position, delayInput).then().catch();
+    delayInput += stepInput;
+  }
 };
 
-button.addEventListener('click', submitPromise);
-
-function createPromise(position, delay) {
+function createPromise(position, delayInput) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
 
-    if (shouldResolve) {
-      resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    }
-    reject(`❌ Rejected promise ${position} in ${delay}ms`);
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve(
+          Notiflix.Notify.success(
+            `✅ Fulfilled promise ${position} in ${delayInput}ms`
+          )
+        );
+      } else {
+        reject(
+          Notiflix.Notify.failure(
+            `❌ Rejected promise ${position} in ${delayInput}ms`
+          )
+        );
+      }
+    }, delayInput);
   });
 }
+
+form.addEventListener('submit', submitForm);
+
+//   setTimeout(() => {
+//     createPromise(counter, delayInput)
+//       .then(value => {
+//         Notiflix.Notify.success(value);
+//       })
+//       .catch(error => {
+//         Notiflix.Notify.failure(error);
+//       });
+
+//     intervalId = setInterval(() => {
+//       counter++;
+
+//       if (counter === +amountInput) {
+//         clearInterval(intervalId);
+//       }
+//       createPromise(counter, +delayInput + stepInput * counter)
+//         .then(value => {
+//           Notiflix.Notify.success(value);
+//         })
+//         .catch(error => {
+//           Notiflix.Notify.success(error);
+//         });
+//     }, stepInput);
+//   }, delayInput);
+// };
