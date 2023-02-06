@@ -32,7 +32,8 @@ const handleButtonBehaviour = e => {
 
 function count() {
   const diff = selectedDate - new Date();
-  if (diff === 0) clearInterval(intervalId);
+  if (diff < 0) clearInterval(intervalId);
+  else convertMs;
   const converted = convertMs(diff);
   days.textContent = converted.days;
   hours.textContent = addLeadingZero(converted.hours);

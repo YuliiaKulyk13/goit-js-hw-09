@@ -9,7 +9,7 @@ const submitPromise = e => {
   const stepInput = document.querySelector('input[name="step"]').value;
   const amountInput = document.querySelector('input[name="amount"]').value;
 
-  let counter = 0;
+  let counter = 1;
   let intervalId = null;
 
   setTimeout(() => {
@@ -24,7 +24,7 @@ const submitPromise = e => {
     intervalId = setInterval(() => {
       counter++;
 
-      if (counter + 1 === +amountInput) {
+      if (counter === +amountInput) {
         clearInterval(intervalId);
       }
       createPromise(counter, +delayInput + stepInput * counter)
