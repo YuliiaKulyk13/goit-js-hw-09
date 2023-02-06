@@ -32,16 +32,17 @@ const handleButtonBehaviour = e => {
 
 function count() {
   const diff = selectedDate - new Date();
-  if (diff < 0) clearInterval(intervalId);
-  else convertMs;
-  const converted = convertMs(diff);
-  days.textContent = converted.days;
-  hours.textContent = addLeadingZero(converted.hours);
-  minutes.textContent = addLeadingZero(converted.minutes);
-  seconds.textContent = addLeadingZero(converted.seconds);
-  button.disabled = true;
+  if (diff < 0) {
+    clearInterval(intervalId);
+  } else {
+    const converted = convertMs(diff);
+    days.textContent = converted.days;
+    hours.textContent = addLeadingZero(converted.hours);
+    minutes.textContent = addLeadingZero(converted.minutes);
+    seconds.textContent = addLeadingZero(converted.seconds);
+    button.disabled = true;
+  }
 }
-
 button.addEventListener('click', handleButtonBehaviour);
 
 const options = {
